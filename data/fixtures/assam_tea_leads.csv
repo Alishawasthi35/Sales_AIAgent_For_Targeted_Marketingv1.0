@@ -1,0 +1,4 @@
+full_name,phone_number,phone_e164,lead_source,source_record_id,consent_status,consent_timestamp,consent_text_or_url,timezone_or_region,client_id,campaign_id,product_interest,notes
+Riya Sharma,+919876543210,,inbound_form,assam_lead_001,explicit,2026-05-01T10:00:00Z,https://assamagrotea.example/retail-interest,Asia/Kolkata,client_assam_agro_tea,campaign_assam_agro_tea_retail,Wholesale Assam orthodox for boutique café,Requested callback from website form
+Arun Das,+919876543211,,ad_lead,assam_lead_002,opted_in,2026-05-01T11:15:00Z,Meta lead form consent,Asia/Kolkata,client_assam_agro_tea,campaign_assam_agro_tea_retail,CTC bulk for kirana chain,Interested in monsoon flush
+Meera Kalita,+919876543212,,event_signup,assam_lead_003,explicit,2026-05-02T09:30:00Z,Expo booth QR opt-in,Asia/Kolkata,client_assam_agro_tea,campaign_assam_agro_tea_retail,Gift packs for corporate gifting,Met at Guwahati trade stall

@@ -171,7 +171,42 @@ Replies are constrained by campaign fields, including:
 - **`offer_summary`**, **`approved_claims`**, **`disallowed_claims`** — what may or may not be said  
 - **`qualification_questions`**, **`objection_responses`** — structured discovery and objections  
 
-Example values are seeded in `scripts/bootstrap_demo.py`.
+Example campaigns are seeded by `scripts/bootstrap_demo.py` (solar) and `scripts/bootstrap_assam_tea.py` (Assam Agro Tea).
+
+---
+
+## Brand example: Assam Agro Tea
+
+Pitch copy and guardrails live in the **campaign** row (see [`app/agent.py`](app/agent.py) `build_system_prompt`). This repo includes a ready-made client and campaign:
+
+| ID | Purpose |
+|----|---------|
+| `client_assam_agro_tea` | Brand record; `name` is **Assam Agro Tea** (used as `{client_name}` in the opening script). |
+| `campaign_assam_agro_tea_retail` | Retail / wholesale tea pitch, claims, objections, and booking link placeholder. |
+
+**Seed the database and print the upload command:**
+
+```powershell
+python scripts\bootstrap_assam_tea.py
+```
+
+**Import leads, approve, queue, and dial** (server running on port 8000):
+
+```powershell
+curl -F "file=@data/fixtures/assam_tea_leads.csv" http://127.0.0.1:8000/campaigns/campaign_assam_agro_tea_retail/leads:upload
+curl -X POST http://127.0.0.1:8000/campaigns/campaign_assam_agro_tea_retail/approve -H "Content-Type: application/json" -d "{\"approved_by\":\"founder\"}"
+curl -X POST http://127.0.0.1:8000/campaigns/campaign_assam_agro_tea_retail/leads/approve
+curl -X POST http://127.0.0.1:8000/campaigns/campaign_assam_agro_tea_retail/queue
+curl -X POST http://127.0.0.1:8000/campaigns/campaign_assam_agro_tea_retail/dial-next
+```
+
+**Automated smoke** (uploads fixture, approves campaign and leads; uses `TWILIO_TO_NUMBER` on the first lead when set):
+
+```powershell
+python scripts\smoke_flow_assam.py
+```
+
+For Hindi or other Sarvam languages, adjust `SARVAM_STT_LANGUAGE` and `SARVAM_TTS_LANGUAGE` in `secrets/.env` (see `secrets/.env.example`). Set `DEFAULT_PHONE_REGION=IN` and `DEFAULT_TIMEZONE=Asia/Kolkata` when most leads omit a `+` prefix.
 
 ---
 
@@ -211,6 +246,7 @@ When the call connects, Twilio opens **`/media/twilio/{call_id}`**; audio flows 
 ```powershell
 python scripts\api_ping.py --twilio
 python scripts\api_ping.py --sarvam-llm
+python scripts\smoke_flow_assam.py
 python tools\unit_economics.py --minutes 1000
 ```
 
