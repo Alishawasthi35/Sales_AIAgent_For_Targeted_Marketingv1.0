@@ -38,3 +38,6 @@ Thumbs.db
 
 # Local tunnel / helper binaries (download separately)
 tools/*.exe
+
+# Planning / internal docs (not published to GitHub)
+docs/

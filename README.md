@@ -71,7 +71,6 @@ SQLite (`data/app.db`) stores clients, campaigns, leads, calls, and suppression 
 | `app/` | Application code: HTTP routes, DB, realtime bridge, Sarvam integration, compliance helpers |
 | `scripts/` | `bootstrap_demo.py`, `smoke_flow.py`, `api_ping.py` |
 | `data/fixtures/` | Sample CSV for demos |
-| `docs/` | Roadmap, compliance, provider notes, MVP spec, pilot launch, **INR cost estimates** |
 | `tools/unit_economics.py` | Pilot unit-economics calculator (editable assumptions) |
 | `secrets/.env.example` | Template for environment variables (copy to `secrets/.env`) |
 
@@ -79,17 +78,7 @@ SQLite (`data/app.db`) stores clients, campaigns, leads, calls, and suppression 
 
 ## Documentation
 
-| Document | Contents |
-|----------|----------|
-| [docs/00-project-roadmap.md](docs/00-project-roadmap.md) | Phased build, deployment, and testing |
-| [docs/01-niche-and-offer.md](docs/01-niche-and-offer.md) | ICP, positioning, offer, metrics |
-| [docs/02-compliance-playbook.md](docs/02-compliance-playbook.md) | Consent, DNC, opt-out, calling windows, risk controls |
-| [docs/03-provider-selection.md](docs/03-provider-selection.md) | Twilio-first; Telnyx cost path |
-| [docs/04-mvp-build-spec.md](docs/04-mvp-build-spec.md) | Product, architecture, data model, call flow |
-| [docs/05-concierge-pilot-launch.md](docs/05-concierge-pilot-launch.md) | Design-partner launch and cadence |
-| [docs/06-voice-cost-estimates-inr.md](docs/06-voice-cost-estimates-inr.md) | Twilio + Sarvam per-minute planning (INR) |
-
-Operational calling must follow applicable law and your [compliance playbook](docs/02-compliance-playbook.md); this software does not replace legal advice.
+Long-form planning notes (roadmap, compliance playbooks, cost worksheets) are kept **out of this repository** by default (`docs/` is gitignored). Maintain them locally if you need them. Operational calling must follow applicable law and your own compliance process; this software does not replace legal advice.
 
 ---
 
@@ -254,7 +243,7 @@ python tools\unit_economics.py --minutes 1000
 
 ## Cost planning
 
-Rough **Twilio + Sarvam** per-minute estimates in INR are documented in [docs/06-voice-cost-estimates-inr.md](docs/06-voice-cost-estimates-inr.md). The `tools/unit_economics.py` script models pilot economics in USD with editable assumptions.
+Use vendor pricing pages (Twilio, Sarvam) for current rates. The `tools/unit_economics.py` script models pilot economics in USD with editable assumptions.
 
 ---
 
