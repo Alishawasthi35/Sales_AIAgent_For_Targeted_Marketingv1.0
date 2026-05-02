@@ -15,6 +15,17 @@ Thanks for helping improve this project.
 
 3. Copy `secrets\.env.example` to `secrets\.env` and fill in values for local testing. Never commit `secrets\.env`.
 
+## Git author (optional)
+
+For commits in this repo, set your name and email (use your GitHub noreply address if you prefer not to expose a personal email):
+
+```powershell
+git config user.name "Your Name"
+git config user.email "you@example.com"
+```
+
+Use your real address, or the private no-reply address shown under GitHub **Settings → Emails**.
+
 ## Before you open a pull request
 
 - Run the same checks as CI locally (see `.github/workflows/ci.yml`): install deps and `python -m compileall app scripts`.
