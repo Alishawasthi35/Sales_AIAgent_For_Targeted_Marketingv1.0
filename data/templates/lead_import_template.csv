@@ -1,0 +1,2 @@
+full_name,phone_number,phone_e164,lead_source,source_record_id,consent_status,consent_timestamp,consent_text_or_url,timezone_or_region,client_id,campaign_id,product_interest,notes
+Example Lead,+14155552671,,inbound_form,crm_001,explicit,2026-05-01T15:30:00Z,https://example.com/consent,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar consultation,Submitted quote request

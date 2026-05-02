@@ -1,0 +1,11 @@
+full_name,phone_number,phone_e164,lead_source,source_record_id,consent_status,consent_timestamp,consent_text_or_url,timezone_or_region,client_id,campaign_id,product_interest,notes
+Maya Patel,+14155552671,,inbound_form,solar_001,explicit,2026-05-01T14:05:00Z,https://greenpeak.example/solar-form,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Rooftop solar,Asked for evening callback
+Carlos Rivera,+14155552672,,ad_lead,solar_002,opted_in,2026-05-01T15:12:00Z,Meta lead form consent,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar savings quote,Owns home
+Nina Brooks,+14155552673,,prior_inquiry,solar_003,consented,2026-05-01T16:22:00Z,CRM inquiry consent,America/Denver,client_demo_solar,campaign_demo_solar,Battery backup,Asked about backup power
+Owen Chen,+14155552674,,webinar_signup,solar_004,explicit,2026-05-01T17:30:00Z,Webinar registration phone follow-up,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar consultation,Attended webinar
+Priya Shah,+14155552675,,event_signup,solar_005,explicit,2026-05-01T18:40:00Z,Home show lead card,America/Chicago,client_demo_solar,campaign_demo_solar,Solar consultation,Met at local home show
+Sam Wilson,+14155552676,,demo_signup,solar_006,yes,2026-05-01T19:55:00Z,Demo request form,America/New_York,client_demo_solar,campaign_demo_solar,Energy bill review,High monthly bill
+Tara Singh,+14155552677,,existing_customer,solar_007,true,2026-05-01T20:05:00Z,Existing customer phone consent,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Battery add-on,Existing roofing customer
+Jordan Lee,+14155552678,,referral_with_consent,solar_008,explicit,2026-05-01T21:15:00Z,Referral opt-in SMS,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar consultation,Referral confirmed consent
+Invalid Phone,12345,,inbound_form,solar_009,explicit,2026-05-01T22:10:00Z,https://greenpeak.example/solar-form,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar consultation,Should be invalid
+No Consent,+14155552679,,ad_lead,solar_010,no,2026-05-01T22:30:00Z,Meta lead form consent,America/Los_Angeles,client_demo_solar,campaign_demo_solar,Solar consultation,Should be blocked
