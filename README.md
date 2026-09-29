@@ -78,8 +78,6 @@ SQLite (`data/app.db`) stores clients, campaigns, leads, calls, and suppression 
 
 ## Documentation
 
-For the Google Cloud dry-run path, setup steps, and operational measurement limits, see [CLOUD_RUN_PILOT.md](CLOUD_RUN_PILOT.md).
-
 Long-form planning notes (roadmap, compliance playbooks, cost worksheets) are kept **out of this repository** by default (`docs/` is gitignored). Maintain them locally if you need them. Operational calling must follow applicable law and your own compliance process; this software does not replace legal advice.
 
 ---
