@@ -17,7 +17,12 @@ load_dotenv(LOCAL_ENV)
 
 @dataclass(frozen=True)
 class Settings:
-    database_path: Path = ROOT_DIR / "data" / "app.db"
+    database_path: Path = Path(os.getenv("DATABASE_PATH", str(ROOT_DIR / "data" / "app.db")))
+    cloud_run: bool = bool(os.getenv("K_SERVICE"))
+    admin_api_token: str = os.getenv("ADMIN_API_TOKEN", "")
+    twilio_auth_token: str = os.getenv("TWILIO_AUTH_TOKEN", "")
+    allow_ephemeral_demo: bool = os.getenv("ALLOW_EPHEMERAL_DEMO", "").lower() == "true"
+    enable_live_calls: bool = os.getenv("ENABLE_LIVE_CALLS", "").lower() == "true"
     public_base_url: str = os.getenv("PUBLIC_BASE_URL", "").rstrip("/")
     twilio_from_number: str = os.getenv("TWILIO_FROM_NUMBER", "")
     twilio_to_number: str = os.getenv("TWILIO_TO_NUMBER", "")

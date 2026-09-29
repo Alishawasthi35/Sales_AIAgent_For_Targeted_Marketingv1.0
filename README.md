@@ -134,7 +134,7 @@ See `secrets/.env.example` for comments and defaults.
 
 | Method | Path | Description |
 |--------|------|-------------|
-| `GET` | `/health` | Liveness and DB path |
+| `GET` | `/health` | Liveness |
 | `POST` | `/clients` | Create client |
 | `POST` | `/campaigns` | Create campaign |
 | `POST` | `/campaigns/{id}/approve` | Approve campaign |

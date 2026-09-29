@@ -17,12 +17,22 @@ OPT_OUT_PHRASES = (
     "take me off",
     "unsubscribe",
     "not contact me again",
+    "never call",
+    "don't ring",
+    "do not ring",
+    "remove my number",
+    "call mat karna",
 )
 
-CALLBACK_PHRASES = ("call me later", "callback", "call back", "busy", "later")
-BOOKING_PHRASES = ("book", "schedule", "appointment", "meeting", "consultation")
-NOT_INTERESTED_PHRASES = ("not interested", "no thanks", "don't need", "do not need")
-BAD_NUMBER_PHRASES = ("wrong number", "who is this", "not me")
+CALLBACK_PHRASES = ("call me later", "callback", "call back", "busy", "speak tomorrow", "ring after")
+BOOKING_PHRASES = (
+    "please book", "book a meeting", "schedule an appointment", "arrange a consultation",
+    "want a demo", "like to visit", "would like to schedule",
+)
+NOT_INTERESTED_PHRASES = (
+    "not interested", "no thanks", "don't need", "do not need", "not looking", "not for me",
+)
+BAD_NUMBER_PHRASES = ("wrong number", "not me", "wrong person", "nobody by that name")
 
 
 @dataclass
@@ -56,7 +66,7 @@ def detect_outcome(text: str) -> str | None:
     lowered = text.lower()
     if any(phrase in lowered for phrase in OPT_OUT_PHRASES):
         return "opted_out"
-    if any(phrase in lowered for phrase in BAD_NUMBER_PHRASES):
+    if "not a wrong number" not in lowered and any(phrase in lowered for phrase in BAD_NUMBER_PHRASES):
         return "bad_number"
     if any(phrase in lowered for phrase in CALLBACK_PHRASES):
         return "callback_requested"

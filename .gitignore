@@ -10,6 +10,7 @@ __pycache__/
 *.so
 .Python
 .venv/
+.uv-cache/
 venv/
 env/
 .mypy_cache/

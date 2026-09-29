@@ -8,7 +8,7 @@ from typing import Any
 from urllib.parse import parse_qs
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile, WebSocket, WebSocketDisconnect
-from fastapi.responses import Response, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field
 from twilio.rest import Client as TwilioClient
 
@@ -18,10 +18,18 @@ from app.db import connect, init_db, json_dump, row_to_dict, rows_to_dicts
 from app.debug_log import debug_log
 from app.main_helpers import audit, new_id, now_iso
 from app.realtime import RealtimeCallBridge
+from app.security import admin_authorized, twilio_websocket_authorized, validate_twilio_http
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    if settings.cloud_run:
+        if not settings.admin_api_token:
+            raise RuntimeError("Cloud Run needs ADMIN_API_TOKEN")
+        if not settings.allow_ephemeral_demo:
+            raise RuntimeError("SQLite is ephemeral on Cloud Run; set ALLOW_EPHEMERAL_DEMO=true for synthetic dry runs only")
+        if settings.enable_live_calls:
+            raise RuntimeError("Live calls require a persistent database for leads and opt-outs")
     init_db()
     yield
 
@@ -32,6 +40,14 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+
+@app.middleware("http")
+async def authenticate_admin(request: Request, call_next):
+    if request.url.path != "/health" and not request.url.path.startswith("/webhooks/twilio/"):
+        if not admin_authorized(request.headers.get("authorization")):
+            return JSONResponse(status_code=401, content={"detail": "admin token required"})
+    return await call_next(request)
 
 
 class ClientCreate(BaseModel):
@@ -74,7 +90,7 @@ class SuppressionCreate(BaseModel):
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "database": str(settings.database_path)}
+    return {"status": "ok"}
 
 
 @app.post("/clients")
@@ -354,6 +370,8 @@ def campaign_metrics(campaign_id: str) -> dict[str, Any]:
 
 @app.post("/campaigns/{campaign_id}/dial-next")
 def dial_next_lead(campaign_id: str) -> dict[str, Any]:
+    if settings.cloud_run and not settings.enable_live_calls:
+        raise HTTPException(status_code=503, detail="live dialing is disabled in the Cloud Run demo")
     with connect() as conn:
         campaign = conn.execute("SELECT * FROM campaigns WHERE id = ?", (campaign_id,)).fetchone()
         if campaign is None:
@@ -457,7 +475,8 @@ def dial_next_lead(campaign_id: str) -> dict[str, Any]:
 
 
 @app.post("/webhooks/twilio/answer")
-def twilio_answer(call_id: str) -> Response:
+async def twilio_answer(call_id: str, request: Request) -> Response:
+    await validate_twilio_http(request)
     stream_url = ""
     if settings.public_base_url:
         stream_url = settings.public_base_url.replace("https://", "wss://").replace("http://", "ws://")
@@ -491,6 +510,7 @@ def twilio_answer(call_id: str) -> Response:
 
 @app.post("/webhooks/twilio/status")
 async def twilio_status(request: Request) -> dict[str, str]:
+    await validate_twilio_http(request)
     body = (await request.body()).decode()
     form = {key: values[-1] for key, values in parse_qs(body).items()}
     provider_call_id = form.get("CallSid", "")
@@ -515,6 +535,9 @@ async def twilio_status(request: Request) -> dict[str, str]:
 
 @app.websocket("/media/twilio/{call_id}")
 async def twilio_media(websocket: WebSocket, call_id: str) -> None:
+    if not twilio_websocket_authorized(websocket):
+        await websocket.close(code=1008, reason="invalid Twilio signature")
+        return
     with connect() as conn:
         row = conn.execute(
             """

@@ -4,7 +4,7 @@ import asyncio
 import base64
 import wave
 from io import BytesIO
-from typing import Any
+from typing import Any, AsyncIterator
 
 from sarvamai import AsyncSarvamAI
 
@@ -19,8 +19,11 @@ def sarvam_client() -> AsyncSarvamAI:
 
 
 async def synthesize_twilio_mulaw_chunks(text: str) -> list[str]:
+    return [chunk async for chunk in stream_twilio_mulaw_chunks(text)]
+
+
+async def stream_twilio_mulaw_chunks(text: str) -> AsyncIterator[str]:
     client = sarvam_client()
-    mulaw_audio = bytearray()
 
     async with client.text_to_speech_streaming.connect(
         model=settings.sarvam_tts_model,
@@ -50,16 +53,14 @@ async def synthesize_twilio_mulaw_chunks(text: str) -> list[str]:
             if message_type == "audio":
                 data = getattr(message, "data", None)
                 if data is not None:
-                    mulaw_audio.extend(_audio_output_to_mulaw(data))
+                    for chunk in chunk_mulaw_base64(_audio_output_to_mulaw(data)):
+                        yield chunk
             elif message_type == "event":
                 event_data = getattr(message, "data", None)
                 if getattr(event_data, "event_type", None) == "final":
                     break
             elif message_type == "error":
                 raise RuntimeError(f"Sarvam TTS error: {message}")
-
-    return chunk_mulaw_base64(bytes(mulaw_audio))
-
 
 def extract_stt_message(message: Any) -> tuple[str, str]:
     message_type = getattr(message, "type", "")

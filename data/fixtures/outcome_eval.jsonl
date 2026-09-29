@@ -1,0 +1,32 @@
+{"id":"opt_out_1","text":"Please do not call me again.","expected":"opted_out"}
+{"id":"opt_out_2","text":"Take me off your list.","expected":"opted_out"}
+{"id":"opt_out_3","text":"Stop calling this number.","expected":"opted_out"}
+{"id":"wrong_1","text":"You have the wrong number.","expected":"bad_number"}
+{"id":"wrong_2","text":"That person is not me, sorry.","expected":"bad_number"}
+{"id":"callback_1","text":"I'm busy. Call me later.","expected":"callback_requested"}
+{"id":"callback_2","text":"Can you call back tomorrow?","expected":"callback_requested"}
+{"id":"callback_3","text":"A callback next week would be better.","expected":"callback_requested"}
+{"id":"qualified_1","text":"I would like to schedule an appointment.","expected":"qualified"}
+{"id":"qualified_2","text":"Please book a meeting for Monday.","expected":"qualified"}
+{"id":"qualified_3","text":"Can we arrange a consultation?","expected":"qualified"}
+{"id":"decline_1","text":"No thanks, I'm not interested.","expected":"not_interested"}
+{"id":"decline_2","text":"I don't need this product.","expected":"not_interested"}
+{"id":"neutral_1","text":"Can you tell me how it works?","expected":null}
+{"id":"neutral_2","text":"What is the price?","expected":null}
+{"id":"neutral_3","text":"Who is calling?","expected":null}
+{"id":"opt_out_4","text":"Please don't ring again.","expected":"opted_out"}
+{"id":"opt_out_5","text":"Remove my number from your database.","expected":"opted_out"}
+{"id":"opt_out_6","text":"Mujhe dobara call mat karna.","expected":"opted_out"}
+{"id":"wrong_3","text":"You have reached the wrong person.","expected":"bad_number"}
+{"id":"wrong_4","text":"Nobody by that name lives here.","expected":"bad_number"}
+{"id":"callback_4","text":"Can we speak tomorrow afternoon?","expected":"callback_requested"}
+{"id":"callback_5","text":"Please ring after five.","expected":"callback_requested"}
+{"id":"qualified_4","text":"I want a demo next Tuesday.","expected":"qualified"}
+{"id":"qualified_5","text":"I would like to visit your showroom.","expected":"qualified"}
+{"id":"decline_3","text":"I'm not looking for this right now.","expected":"not_interested"}
+{"id":"decline_4","text":"No, this is not for me.","expected":"not_interested"}
+{"id":"neutral_4","text":"Who is this? I did not request a call.","expected":null}
+{"id":"neutral_5","text":"Is booking mandatory?","expected":null}
+{"id":"neutral_6","text":"This is not a wrong number.","expected":null}
+{"id":"neutral_7","text":"Please explain the consultation process.","expected":null}
+{"id":"priority_1","text":"Book a meeting, but never call me again.","expected":"opted_out"}
