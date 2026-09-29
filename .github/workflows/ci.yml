@@ -25,7 +25,7 @@ jobs:
         run: python -m compileall app scripts -q
 
       - name: Focused tests
-        run: pytest -q
+        run: python -m pytest -q
 
       - name: Synthetic outcome evaluation
         run: python -m tools.evaluate_outcomes
